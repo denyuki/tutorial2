@@ -1,0 +1,2 @@
+C:\Users\human\Documents\UnityProjects\Koukigame\obj\Debug\Assembly-CSharp.csprojAssemblyReference.cache
+C:\Users\human\Documents\UnityProjects\Koukigame\obj\Debug\Assembly-CSharp.csproj.CoreCompileInputs.cache
