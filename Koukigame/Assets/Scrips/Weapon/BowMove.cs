@@ -25,12 +25,7 @@ public class BowMove : MonoBehaviour
 
     private void OnEnable()
     {
-        
-    }
-
-    private void Start()
-    {
-        
+        jump = false;
         gameObjects = GameObject.FindGameObjectsWithTag("Hook");
 
         Vector3 pos = transform.position;
@@ -53,18 +48,18 @@ public class BowMove : MonoBehaviour
             hingeJoint.connectedBody = gt.GetComponent<Rigidbody2D>();
 
         }
-        else if (distance == 7f || jump == true)
-        {
-            hingeJoint.enabled = false;
-            gameObject.SetActive(false);        
-        }
     }
 
     private void Update()
     {
         jump = inputControl.Jump();
-    
-        
+        if (distance == 7f || jump == true)
+        {
+            hingeJoint.enabled = false;
+            hingeJoint.connectedBody = null;
+            gameObject.SetActive(false);
+        }
+
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

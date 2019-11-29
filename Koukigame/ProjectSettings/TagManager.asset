@@ -9,6 +9,9 @@ TagManager:
   - DaggerAttack
   - wall
   - Hook
+  - Red
+  - Yellow
+  - Blue
   layers:
   - Default
   - TransparentFX

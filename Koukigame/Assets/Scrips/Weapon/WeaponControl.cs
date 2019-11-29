@@ -4,10 +4,20 @@ using UnityEngine;
 
 public class WeaponControl : MonoBehaviour
 {
+    enum Weapon
+    {
+        Sword,
+        Dagger,
+        Bow,
+        Nome,
+    };
+    Weapon mainWeapon = Weapon.Nome;
+    Weapon subWeapon = Weapon.Nome;
+    Weapon weaponSpace;
+    Weapon getWeapon = Weapon.Nome;
+    
+
     InputControl inputControl;
-    Sword sword;
-    Dagger dagger;
-    Bow Bow;
 
     [SerializeField]
     GameObject dame;
@@ -30,19 +40,22 @@ public class WeaponControl : MonoBehaviour
     [SerializeField]
     GameObject bowAttack;
 
-    
-    int weapon = 2;
     bool mvSkills;
     bool atSkills;
     bool jump;
+    bool change;
+    bool stoneTouch = false;
     float delta = 0f;
     float span = 0.5f;
+    float changeSpan = 1f;
+
+    
 
 
     // Start is called before the first frame update
     void Start()
     {
-        this.inputControl = GetComponent<InputControl>();
+        inputControl = GetComponent<InputControl>();
         
     }
 
@@ -52,7 +65,7 @@ public class WeaponControl : MonoBehaviour
         mvSkills = this.inputControl.MvSkills();
         atSkills = this.inputControl.AtSkills();
         jump = this.inputControl.Jump();
-
+        change = this.inputControl.WeaponChange();
 
         delta += Time.deltaTime;
         if(delta >= span)
@@ -60,62 +73,96 @@ public class WeaponControl : MonoBehaviour
             a();
         }
 
-        if(jump == true)
+        if(stoneTouch == true && delta >= changeSpan)
         {
+            GetWeapon(getWeapon);
+        }
+        
 
+        if(change == true)
+        {
+            weaponSpace = subWeapon;
+            subWeapon = mainWeapon;
+            mainWeapon = weaponSpace;
         }
 
     }
 
     private void a()
     {
-        switch (weapon)
+        switch (mainWeapon)
         {
-            case 1:
+            case Weapon.Sword:
                 if (mvSkills == true)
-                {
-                   
-                    swordMove.SetActive(true);                    
+                {  
+                    swordMove.SetActive(true);
+                    TimeReset();
                 }
                 if(atSkills == true)
                 {
                     dame.SetActive(false);
                     swordAttack.SetActive(true);
+                    TimeReset();
                 }
-                delta = 0;
                 break;
-            case 2:
+
+            case Weapon.Dagger:
                 if(mvSkills == true)
                 {
                     //dame.SetActive(false);
                     daggerMove.SetActive(true);
+                    TimeReset();
                 }
                 if(atSkills == true)
                 {
                     //dame.SetActive(false);
                     daggerAttack.SetActive(true);
+                    TimeReset();
                 }
-
-                delta = 0;
                 break;
-            case 3:
 
+            case Weapon.Bow:
                 if(mvSkills == true)
                 {
                     bowMove.SetActive(true);
-                    delta = 0;
+                    TimeReset();
                 }
                 if(atSkills == true)
                 {
                     dame.SetActive(false);
                     bowAttack.SetActive(true);
-                    delta = 0;
-                }
-                
-                break;
-            default:
-
+                    TimeReset();
+                }               
                 break;
         }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        TimeReset();
+        stoneTouch = true;
+        if (collision.gameObject.tag == "Red")
+        {
+            getWeapon = Weapon.Sword; 
+        }
+        if (collision.gameObject.tag == "Yellow")
+        {
+            getWeapon = Weapon.Dagger;
+        }
+        if (collision.gameObject.tag == "Blue")
+        {
+            getWeapon = Weapon.Bow;
+        }
+
+    }
+
+    void GetWeapon(Weapon getweapon)
+    {
+        mainWeapon = getweapon;
+    }
+
+    void TimeReset()
+    {
+        delta = 0f;
     }
 }

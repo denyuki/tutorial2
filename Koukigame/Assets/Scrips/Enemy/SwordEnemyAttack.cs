@@ -5,6 +5,7 @@ using UnityEngine;
 public class SwordEnemyAttack : MonoBehaviour
 {
     EnemyMove enemyMove;
+    Animator animator;
 
     bool attack = false;
     bool hit = false;
@@ -12,25 +13,49 @@ public class SwordEnemyAttack : MonoBehaviour
     void Start()
     {
         enemyMove = GetComponent<EnemyMove>();
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        attack = enemyMove.Attack();
-
+        
         if(attack == true)
         {
-
+            animator.SetBool("Attack", true);
+            if(hit == true)
+            {
+                Debug.Log("a");
+            }
+            
         }
+        
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject.tag == ("Player"))
         {
-            hit = true;
+            attack = true;
         }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == ("Player"))
+        {
+            attack = false;
+        }
+    }
+
+    public void OnHit()
+    {
+        hit = true;
+    }
+
+    public void OffHit()
+    {
+        hit = false;
     }
 
 }

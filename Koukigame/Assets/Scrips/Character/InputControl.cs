@@ -14,10 +14,13 @@ public class InputControl : MonoBehaviour
 
     KeyCode MoveSkill = KeyCode.J;
 
+    KeyCode Change = KeyCode.L;
+
     float move;
     bool jump;
     bool mvSkill;
     bool atSkill;
+    bool change;
 
     // Start is called before the first frame update
     void Start()
@@ -31,6 +34,7 @@ public class InputControl : MonoBehaviour
         this.move = 0f;
         mvSkill = false;
         atSkill = false;
+        change = false;
 
         if (Input.GetKey(this.Right))
         {            
@@ -61,7 +65,12 @@ public class InputControl : MonoBehaviour
         if (Input.GetKey(this.MoveSkill))
         {
             mvSkill = true;
-        }     
+        }
+
+        if (Input.GetKey(this.Change))
+        {
+            change = true;
+        }
     }
 
     public float Walk()
@@ -82,5 +91,10 @@ public class InputControl : MonoBehaviour
     public bool AtSkills()
     {
         return this.atSkill;
+    }
+
+    public bool WeaponChange()
+    {
+        return this.change;
     }
 }

@@ -50,12 +50,16 @@ public class EnemyMove : MonoBehaviour
                     }else if(player.transform.position.x < transform.position.x)
                     {
                         a = -1;
-                    }else
+                        transform.localScale = new Vector3(0.3f * a, 0.3f, 1);
+                    }
+                    else
                     {
                         a = 1;
+                        transform.localScale = new Vector3(0.3f * a, 0.3f, 1);
                     }
                     transform.Translate(speed * a, 0, 0);
-                    Debug.Log(Mathf.Abs(player.transform.position.x - transform.position.x));
+                    
+
                 }
                 break;
 
