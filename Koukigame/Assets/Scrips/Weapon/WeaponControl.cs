@@ -6,18 +6,18 @@ public class WeaponControl : MonoBehaviour
 {
     enum Weapon
     {
-        Sword,
-        Dagger,
-        Bow,
-        Nome,
+        Nome = 0,
+        Sword = 1,
+        Dagger = 2,
+        Bow = 3,
     };
     Weapon mainWeapon = Weapon.Nome;
     Weapon subWeapon = Weapon.Nome;
     Weapon weaponSpace;
     Weapon getWeapon = Weapon.Nome;
     
-
     InputControl inputControl;
+    CharacterStatus characterStatus;
 
     [SerializeField]
     GameObject dame;
@@ -45,6 +45,7 @@ public class WeaponControl : MonoBehaviour
     bool jump;
     bool change;
     bool stoneTouch = false;
+    bool search;
     float delta = 0f;
     float span = 0.5f;
     float changeSpan = 1f;
@@ -56,7 +57,10 @@ public class WeaponControl : MonoBehaviour
     void Start()
     {
         inputControl = GetComponent<InputControl>();
-        
+        characterStatus = GetComponent<CharacterStatus>();
+       
+
+
     }
 
     // Update is called once per frame
@@ -66,14 +70,15 @@ public class WeaponControl : MonoBehaviour
         atSkills = this.inputControl.AtSkills();
         jump = this.inputControl.Jump();
         change = this.inputControl.WeaponChange();
+        search = this.inputControl.SroneSearch();
 
         delta += Time.deltaTime;
-        if(delta >= span)
+        if(mvSkills == true || atSkills == true)
         {
-            a();
+            WeaponSkill();
         }
 
-        if(stoneTouch == true && delta >= changeSpan)
+        if(stoneTouch == true)
         {
             GetWeapon(getWeapon);
         }
@@ -84,56 +89,61 @@ public class WeaponControl : MonoBehaviour
             weaponSpace = subWeapon;
             subWeapon = mainWeapon;
             mainWeapon = weaponSpace;
+            characterStatus.GetWeapon((int)subWeapon, (int)mainWeapon);
         }
+
 
     }
 
-    private void a()
+    private void WeaponSkill()
     {
-        switch (mainWeapon)
+        if (delta >= span)
         {
-            case Weapon.Sword:
-                if (mvSkills == true)
-                {  
-                    swordMove.SetActive(true);
-                    TimeReset();
-                }
-                if(atSkills == true)
-                {
-                    dame.SetActive(false);
-                    swordAttack.SetActive(true);
-                    TimeReset();
-                }
-                break;
+            switch (mainWeapon)
+            {
+                case Weapon.Sword:
+                    if (mvSkills == true)
+                    {
+                        swordMove.SetActive(true);
+                        TimeReset();
+                    }
+                    if (atSkills == true)
+                    {
+                        dame.SetActive(false);
+                        swordAttack.SetActive(true);
+                        TimeReset();
+                    }
+                    break;
 
-            case Weapon.Dagger:
-                if(mvSkills == true)
-                {
-                    //dame.SetActive(false);
-                    daggerMove.SetActive(true);
-                    TimeReset();
-                }
-                if(atSkills == true)
-                {
-                    //dame.SetActive(false);
-                    daggerAttack.SetActive(true);
-                    TimeReset();
-                }
-                break;
+                case Weapon.Dagger:
+                    if (mvSkills == true)
+                    {
+                        //dame.SetActive(false);
+                        daggerMove.SetActive(true);
+                        TimeReset();
+                    }
+                    if (atSkills == true)
+                    {
+                        //dame.SetActive(false);
+                        daggerAttack.SetActive(true);
+                        TimeReset();
+                    }
+                    break;
 
-            case Weapon.Bow:
-                if(mvSkills == true)
-                {
-                    bowMove.SetActive(true);
-                    TimeReset();
-                }
-                if(atSkills == true)
-                {
-                    dame.SetActive(false);
-                    bowAttack.SetActive(true);
-                    TimeReset();
-                }               
-                break;
+                case Weapon.Bow:
+                    if (mvSkills == true)
+                    {
+                        bowMove.SetActive(true);
+                        TimeReset();
+                    }
+                    if (atSkills == true)
+                    {
+                        dame.SetActive(false);
+                        bowAttack.SetActive(true);
+                        TimeReset();
+                    }
+                    break;
+            }
         }
     }
 
@@ -143,7 +153,7 @@ public class WeaponControl : MonoBehaviour
         stoneTouch = true;
         if (collision.gameObject.tag == "Red")
         {
-            getWeapon = Weapon.Sword; 
+            getWeapon = Weapon.Sword;
         }
         if (collision.gameObject.tag == "Yellow")
         {
@@ -158,11 +168,27 @@ public class WeaponControl : MonoBehaviour
 
     void GetWeapon(Weapon getweapon)
     {
-        mainWeapon = getweapon;
+        
+        if (delta >= changeSpan && CharacterStatus.weaponPoint > 0)
+        {
+            CharacterStatus.weaponPoint -= 1;
+            mainWeapon = getweapon;
+            characterStatus.WeaponPoint();
+            characterStatus.GetWeapon((int)subWeapon, (int)mainWeapon);
+            stoneTouch = false;
+        }
+        
     }
 
     void TimeReset()
     {
         delta = 0f;
     }
+
+    Weapon MainWeapon()
+    {
+        return mainWeapon;
+    }
+
+    
 }

@@ -60,14 +60,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scrips\Character\CharacteControl.cs" />
     <Compile Include="Assets\Scrips\Character\CharacterControl.cs" />
     <Compile Include="Assets\Scrips\Character\InputControl.cs" />
     <Compile Include="Assets\Scrips\Character\PlayerMove.cs" />
+    <Compile Include="Assets\Scrips\CharacterStatus.cs" />
     <Compile Include="Assets\Scrips\Enemy\EnemyMove.cs" />
     <Compile Include="Assets\Scrips\Enemy\SwordEnemyAttack.cs" />
-    <Compile Include="Assets\Scrips\Gravity.cs" />
-    <Compile Include="Assets\Scrips\JumpChara.cs" />
+    <Compile Include="Assets\Scrips\HpBackground.cs" />
+    <Compile Include="Assets\Scrips\SearchControl.cs" />
     <Compile Include="Assets\Scrips\Weapon\Arrow.cs" />
     <Compile Include="Assets\Scrips\Weapon\Bow.cs" />
     <Compile Include="Assets\Scrips\Weapon\BowMove.cs" />

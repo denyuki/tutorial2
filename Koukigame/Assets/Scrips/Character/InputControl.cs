@@ -14,13 +14,16 @@ public class InputControl : MonoBehaviour
 
     KeyCode MoveSkill = KeyCode.J;
 
-    KeyCode Change = KeyCode.L;
+    KeyCode Change = KeyCode.K;
+
+    KeyCode Search = KeyCode.L;
 
     float move;
     bool jump;
     bool mvSkill;
     bool atSkill;
     bool change;
+    bool search;
 
     // Start is called before the first frame update
     void Start()
@@ -35,6 +38,7 @@ public class InputControl : MonoBehaviour
         mvSkill = false;
         atSkill = false;
         change = false;
+        search = false;
 
         if (Input.GetKey(this.Right))
         {            
@@ -71,6 +75,11 @@ public class InputControl : MonoBehaviour
         {
             change = true;
         }
+
+        if (Input.GetKey(this.Search))
+        {
+            search = true;
+        }
     }
 
     public float Walk()
@@ -96,5 +105,10 @@ public class InputControl : MonoBehaviour
     public bool WeaponChange()
     {
         return this.change;
+    }
+
+    public bool SroneSearch()
+    {
+        return this.search;
     }
 }

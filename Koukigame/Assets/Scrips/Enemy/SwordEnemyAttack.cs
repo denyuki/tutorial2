@@ -6,9 +6,13 @@ public class SwordEnemyAttack : MonoBehaviour
 {
     EnemyMove enemyMove;
     Animator animator;
+    [SerializeField]
+    CharacterStatus characterStatus;
 
     bool attack = false;
     bool hit = false;
+    float damage = 20;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,23 +24,13 @@ public class SwordEnemyAttack : MonoBehaviour
     void Update()
     {
         
-        if(attack == true)
-        {
-            animator.SetBool("Attack", true);
-            if(hit == true)
-            {
-                Debug.Log("a");
-            }
-            
-        }
-        
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject.tag == ("Player"))
         {
-            attack = true;
+            Attack();
         }
     }
 
@@ -45,6 +39,15 @@ public class SwordEnemyAttack : MonoBehaviour
         if (collision.gameObject.tag == ("Player"))
         {
             attack = false;
+        }
+    }
+
+    private void Attack()
+    {
+        animator.SetBool("Attack", true);
+        if (hit == true)
+        {
+            characterStatus.Damage(damage);
         }
     }
 

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacteControl : MonoBehaviour
+public class CharacterControl : MonoBehaviour
 {
     PlayerMove playerMove;
     InputControl inputControl;
@@ -19,5 +19,6 @@ public class CharacteControl : MonoBehaviour
     {
         this.playerMove.WalkMove(this.inputControl.Walk());
         this.playerMove.JumpMove(this.inputControl.Jump());
+
     }
 }

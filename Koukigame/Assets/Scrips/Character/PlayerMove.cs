@@ -48,7 +48,6 @@ public class PlayerMove : MonoBehaviour
     {
         if (jmove == true && a == true)
         {
-
             rigidbody2D.AddForce(Vector2.up * jump);
 
             a = false;
