@@ -5,6 +5,7 @@ using UnityEngine;
 public class SearchControl : MonoBehaviour
 {
     InputControl inputControl;
+    GameDirector gameDirector;
 
     [SerializeField]
     GameObject searchImage;
@@ -15,7 +16,7 @@ public class SearchControl : MonoBehaviour
 
 
     bool search;
-    float movingDistance = 0;
+    float movingDistance = 100f;
 
     Vector3 pos;
 
@@ -23,6 +24,7 @@ public class SearchControl : MonoBehaviour
     void Start()
     {
         inputControl = GetComponent<InputControl>();
+        gameDirector = GetComponent<GameDirector>();
         pos = player.transform.position;
     }
 
@@ -36,10 +38,10 @@ public class SearchControl : MonoBehaviour
         {
             movingDistance += 1;
             pos = player.transform.position;
-            //Debug.Log(movingDistance);
+            gameDirector.SearchGauge(movingDistance);
         }
 
-        if(! search && movingDistance >= 100)
+        if(search && movingDistance >= 100)
         {
             movingDistance = 0;
             searchImage.SetActive(true);
@@ -48,7 +50,6 @@ public class SearchControl : MonoBehaviour
             {
                 searchImage.SetActive(false);
             }
-
         }
 
     }

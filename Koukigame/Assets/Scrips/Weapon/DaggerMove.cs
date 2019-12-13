@@ -10,6 +10,9 @@ public class DaggerMove : MonoBehaviour
     GameObject playe;
 
     [SerializeField]
+    Rigidbody2D rigidbody2D;
+
+    [SerializeField]
     InputControl inputControl;
 
     bool skill;
@@ -19,7 +22,6 @@ public class DaggerMove : MonoBehaviour
     {
         skill = false;
         jump = false;
-        
     }
 
     private void Start()
@@ -30,18 +32,16 @@ public class DaggerMove : MonoBehaviour
     void Update()
     {
         jump = inputControl.Jump();
-
         if (skill == true)
         {
-            playe.transform.position = pos; 
-            
+            rigidbody2D.velocity = Vector3.zero;
+            playe.transform.position = this.pos;
+            PlayerMove.a = true;
         }
         if (jump == true)
         {
             gameObject.SetActive(false);
         }
-        
-
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

@@ -9,35 +9,25 @@ public class SwordAttack : MonoBehaviour
     [SerializeField]
     GameObject dame;
 
+    BoxCollider2D boxCollider2D;
+
     bool attack;
 
-    private void OnEnable()
+    private void Start()
     {
-        attack = false;
-    }
-
-    private void Update()
-    {
-
+        boxCollider2D = GetComponent<BoxCollider2D>();
     }
 
     void Attack()
     {
-        attack = true;
+        boxCollider2D.enabled = true;
     }
 
     void End()
     {
+        boxCollider2D.enabled = false;
         gameObject.SetActive(false);
         dame.SetActive(true);
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if(attack == true)
-        {
-
-        }
     }
 
 }

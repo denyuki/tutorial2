@@ -17,7 +17,7 @@ public class WeaponControl : MonoBehaviour
     Weapon getWeapon = Weapon.Nome;
     
     InputControl inputControl;
-    CharacterStatus characterStatus;
+    GameDirector gameDirector;
 
     [SerializeField]
     GameObject dame;
@@ -44,7 +44,7 @@ public class WeaponControl : MonoBehaviour
     bool atSkills;
     bool jump;
     bool change;
-    bool stoneTouch = false;
+    bool stoneTouch;
     bool search;
     float delta = 0f;
     float span = 0.5f;
@@ -57,10 +57,7 @@ public class WeaponControl : MonoBehaviour
     void Start()
     {
         inputControl = GetComponent<InputControl>();
-        characterStatus = GetComponent<CharacterStatus>();
-       
-
-
+        gameDirector = GetComponent<GameDirector>();
     }
 
     // Update is called once per frame
@@ -89,7 +86,7 @@ public class WeaponControl : MonoBehaviour
             weaponSpace = subWeapon;
             subWeapon = mainWeapon;
             mainWeapon = weaponSpace;
-            characterStatus.GetWeapon((int)subWeapon, (int)mainWeapon);
+            gameDirector.GetWeapon((int)subWeapon, (int)mainWeapon);
         }
 
 
@@ -124,7 +121,7 @@ public class WeaponControl : MonoBehaviour
                     }
                     if (atSkills == true)
                     {
-                        //dame.SetActive(false);
+                        dame.SetActive(false);
                         daggerAttack.SetActive(true);
                         TimeReset();
                     }
@@ -150,34 +147,39 @@ public class WeaponControl : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         TimeReset();
-        stoneTouch = true;
         if (collision.gameObject.tag == "Red")
         {
             getWeapon = Weapon.Sword;
+            stoneTouch = true;
         }
         if (collision.gameObject.tag == "Yellow")
         {
             getWeapon = Weapon.Dagger;
+            stoneTouch = true;
         }
         if (collision.gameObject.tag == "Blue")
         {
             getWeapon = Weapon.Bow;
+            stoneTouch = true;
         }
+    }
 
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        stoneTouch = false;
     }
 
     void GetWeapon(Weapon getweapon)
     {
         
-        if (delta >= changeSpan && CharacterStatus.weaponPoint > 0)
+        if (delta >= changeSpan && GameDirector.weaponPoint > 0)
         {
-            CharacterStatus.weaponPoint -= 1;
+            GameDirector.weaponPoint -= 1;
             mainWeapon = getweapon;
-            characterStatus.WeaponPoint();
-            characterStatus.GetWeapon((int)subWeapon, (int)mainWeapon);
+            gameDirector.WeaponPoint();
+            gameDirector.GetWeapon((int)subWeapon, (int)mainWeapon);
             stoneTouch = false;
-        }
-        
+        }      
     }
 
     void TimeReset()

@@ -12,6 +12,8 @@ TagManager:
   - Red
   - Yellow
   - Blue
+  - PlayerAttack
+  - GameOver
   layers:
   - Default
   - TransparentFX

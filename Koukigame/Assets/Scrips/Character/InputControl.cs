@@ -39,6 +39,7 @@ public class InputControl : MonoBehaviour
         atSkill = false;
         change = false;
         search = false;
+        jump = false;
 
         if (Input.GetKey(this.Right))
         {            
@@ -51,32 +52,27 @@ public class InputControl : MonoBehaviour
             transform.localScale = new Vector3(move, 1, 1);
         }
 
-        if (Input.GetKey(this.space))
+        if (Input.GetKeyDown(this.space))
         {
             jump = true;            
         }
 
-        if (Input.GetKeyUp(this.space))
-        {
-            jump = false;
-        }
-
-        if (Input.GetKey(this.AttackSkill))
+        if (Input.GetKeyDown(this.AttackSkill))
         {
             atSkill = true;
         }
 
-        if (Input.GetKey(this.MoveSkill))
+        if (Input.GetKeyDown(this.MoveSkill))
         {
             mvSkill = true;
         }
 
-        if (Input.GetKey(this.Change))
+        if (Input.GetKeyDown(this.Change))
         {
             change = true;
         }
 
-        if (Input.GetKey(this.Search))
+        if (Input.GetKeyDown(this.Search))
         {
             search = true;
         }

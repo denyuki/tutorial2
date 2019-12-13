@@ -66,7 +66,7 @@ public class BowMove : MonoBehaviour
     {
         if(collision.gameObject.tag == "Hook")
         {
-            rope.SetActive(true);      
+            //rope.SetActive(true);      
         }
     }
 }

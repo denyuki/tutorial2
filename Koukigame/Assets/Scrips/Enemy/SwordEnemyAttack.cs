@@ -7,11 +7,11 @@ public class SwordEnemyAttack : MonoBehaviour
     EnemyMove enemyMove;
     Animator animator;
     [SerializeField]
-    CharacterStatus characterStatus;
+    GameDirector gameDirector;
 
     bool attack = false;
     bool hit = false;
-    float damage = 20;
+    float damage = 100;
 
     // Start is called before the first frame update
     void Start()
@@ -47,7 +47,7 @@ public class SwordEnemyAttack : MonoBehaviour
         animator.SetBool("Attack", true);
         if (hit == true)
         {
-            characterStatus.Damage(damage);
+            gameDirector.Damage(damage);
         }
     }
 
