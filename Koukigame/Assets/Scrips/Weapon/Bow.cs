@@ -23,9 +23,7 @@ public class Bow : MonoBehaviour
 
     void Attack()
     {
-
-        Instantiate(arrowPrefab);
-        
+        Instantiate(arrowPrefab);     
     }
 
     void End()

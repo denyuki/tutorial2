@@ -36,11 +36,10 @@ public class DaggerMove : MonoBehaviour
         {
             rigidbody2D.velocity = Vector3.zero;
             playe.transform.position = this.pos;
-            PlayerMove.a = true;
-        }
-        if (jump == true)
-        {
-            gameObject.SetActive(false);
+            if (jump == true)
+            {
+                gameObject.SetActive(false);
+            }
         }
     }
 
@@ -48,8 +47,9 @@ public class DaggerMove : MonoBehaviour
     {
         if (collision.gameObject.tag == "wall")
         {
-           this.pos = playe.transform.position;
-           skill = true;
+            this.pos = playe.transform.position;
+            skill = true;
+            PlayerMove.a = true;
         }
     }
 

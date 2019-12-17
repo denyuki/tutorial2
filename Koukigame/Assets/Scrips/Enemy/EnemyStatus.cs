@@ -6,7 +6,8 @@ public class EnemyStatus : MonoBehaviour
 {
     [SerializeField]
     GameDirector gameDirector;
-    int hp = 2;
+    int hp = 4;
+    bool a = false;
     
     // Start is called before the first frame update
     void Start()
@@ -24,13 +25,13 @@ public class EnemyStatus : MonoBehaviour
     {
         if (collision.gameObject.tag == "PlayerAttack")
         {
-            Damage();
+            Damage();        
         }
     }
 
     void Damage()
     {
-        hp -= 1;
+        hp--;
         Debug.Log(hp);
         if (hp <= 0)
         {
