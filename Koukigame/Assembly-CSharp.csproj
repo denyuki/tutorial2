@@ -60,6 +60,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scrips\BowAttack.cs" />
+    <Compile Include="Assets\Scrips\Camera.cs" />
     <Compile Include="Assets\Scrips\CamerControl.cs" />
     <Compile Include="Assets\Scrips\Character\CharacterControl.cs" />
     <Compile Include="Assets\Scrips\Character\GameDirector.cs" />
@@ -68,6 +70,7 @@
     <Compile Include="Assets\Scrips\Enemy\EnemyMove.cs" />
     <Compile Include="Assets\Scrips\Enemy\EnemyStatus.cs" />
     <Compile Include="Assets\Scrips\Enemy\SwordEnemyAttack.cs" />
+    <Compile Include="Assets\Scrips\EnemyArrow.cs" />
     <Compile Include="Assets\Scrips\HpBackground.cs" />
     <Compile Include="Assets\Scrips\SearchControl.cs" />
     <Compile Include="Assets\Scrips\Weapon\Arrow.cs" />
@@ -79,7 +82,6 @@
     <Compile Include="Assets\Scrips\Weapon\Sword.cs" />
     <Compile Include="Assets\Scrips\Weapon\SwordAttack.cs" />
     <Compile Include="Assets\Scrips\Weapon\WeaponControl.cs" />
-    <Compile Include="Assets\Scrips\WeaponGet.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>C:/Users/human/Documents/UnityProjects/koukigame/Koukigame/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>

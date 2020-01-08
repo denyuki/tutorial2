@@ -6,8 +6,14 @@ public class EnemyStatus : MonoBehaviour
 {
     [SerializeField]
     GameDirector gameDirector;
-    int hp = 4;
+
+    [SerializeField]
+    WeaponControl weaponControl;
+
+    int hp = 2;
     bool a = false;
+    bool seDaggreBow = false;
+    int damage = 1;
     
     // Start is called before the first frame update
     void Start()
@@ -18,21 +24,45 @@ public class EnemyStatus : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        seDaggreBow = weaponControl.SeDaggreBow();
+
+        if (a)
+        {
+            Damage();
+            
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "PlayerAttack")
         {
-            Damage();        
+            a = true;
+            Debug.Log("a");
         }
     }
 
-    void Damage()
+    private void OnTriggerExit2D(Collider2D collision)
     {
-        hp--;
-        Debug.Log(hp);
+        if (collision.gameObject.tag == "PlayerAttack")
+        {
+            a = false;
+        }
+       
+    }
+
+    void Damage()
+    {       
+        if (seDaggreBow)
+        {
+            damage = 2;
+        }
+        else
+        {
+            damage = 1;
+            
+        }
+        hp -= damage;
         if (hp <= 0)
         {
             Destroy(gameObject);

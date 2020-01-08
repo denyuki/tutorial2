@@ -17,6 +17,9 @@ public class Sword : MonoBehaviour
     [SerializeField]
     GameObject playe;
 
+    [SerializeField]
+    GameObject dame;
+
     private void OnEnable()
     {
         skill = true;
@@ -36,11 +39,13 @@ public class Sword : MonoBehaviour
         {
             playe.transform.position = endposition;
             gameObject.SetActive(false);
+            dame.SetActive(true);
         }
 
         if (! skill)
         {
             gameObject.SetActive(false);
+            dame.SetActive(true);
         }
         var rate = diff / this.time;
 

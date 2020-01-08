@@ -11,7 +11,7 @@ public class PlayerMove : MonoBehaviour
     float accel = 20f;
     public static bool a;
     float startTime;
-    float time = 0.5f;
+    float time = 0.2f;
     bool knockBack;
 
     [SerializeField]
@@ -86,7 +86,7 @@ public class PlayerMove : MonoBehaviour
     {
         this.move = transform.localScale;
         startPosition = transform.position;
-        endposition = new Vector3(startPosition.x + (2 * -move.x), startPosition.y, 0);
+        endposition = new Vector3(startPosition.x + (2 * -move.x), startPosition.y);
 
         startTime = Time.timeSinceLevelLoad;
         startPosition = transform.position;

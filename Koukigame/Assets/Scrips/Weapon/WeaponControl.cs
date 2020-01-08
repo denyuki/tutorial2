@@ -39,10 +39,14 @@ public class WeaponControl : MonoBehaviour
     [SerializeField]
     GameObject bowAttack;
 
+    GameObject[] enemys;
+
     bool mvSkills;
     bool atSkills;
-    bool change;
+    bool change = false;
     bool stoneTouch;
+    bool wall = false;
+    bool seDaggreBow = false;
     float delta = 0f;
     float span = 0.5f;
     float changeSpan = 1f;
@@ -54,6 +58,7 @@ public class WeaponControl : MonoBehaviour
     {
         inputControl = GetComponent<InputControl>();
         gameDirector = GetComponent<GameDirector>();
+        enemys = GameObject.FindGameObjectsWithTag("enemy");
     }
 
     // Update is called once per frame
@@ -73,13 +78,7 @@ public class WeaponControl : MonoBehaviour
         {
             GetWeapon(getWeapon);
         }
-
-        if(mainWeaponTimes == 0)
-        {
-            mainWeapon = Weapon.Nome;
-            mainWeaponTimes = -1;
-        }
-   
+        
         if(change == true)
         {
             Weapon weaponSpace = subWeapon;
@@ -87,6 +86,7 @@ public class WeaponControl : MonoBehaviour
             mainWeapon = weaponSpace;
             gameDirector.GetWeapon((int)subWeapon, (int)mainWeapon);
         }
+
     }
 
     private void WeaponSkill()
@@ -111,8 +111,12 @@ public class WeaponControl : MonoBehaviour
                 case Weapon.Dagger:
                     if (mvSkills == true)
                     {
-                        WeaponSkillTrigger(daggerMove);
-                        TimeReset();
+                        if (wall == true)
+                        {
+                            WeaponSkillTrigger(daggerMove);
+                            TimeReset();
+                        }
+                        wall = false;
                     }
                     if (atSkills == true)
                     {
@@ -137,34 +141,34 @@ public class WeaponControl : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    void SpecialEffects()
     {
-        TimeReset();
-        if (collision.gameObject.tag == "Red")
+        if ((mainWeapon == Weapon.Sword && subWeapon == Weapon.Dagger)
+            || (subWeapon == Weapon.Sword && mainWeapon == Weapon.Dagger))
         {
-            getWeapon = Weapon.Sword;
-            stoneTouch = true;
+            mainWeaponTimes += 1;
+            subWeaponTimes += 1;
         }
-        if (collision.gameObject.tag == "Yellow")
-        {
-            getWeapon = Weapon.Dagger;
-            stoneTouch = true;
-        }
-        if (collision.gameObject.tag == "Blue")
-        {
-            getWeapon = Weapon.Bow;
-            stoneTouch = true;
-        }
-    }
 
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        stoneTouch = false;
+        if ((mainWeapon == Weapon.Dagger && subWeapon == Weapon.Bow)
+            || (subWeapon == Weapon.Dagger && mainWeapon == Weapon.Bow))
+        {
+            seDaggreBow = true;
+        }
+        else
+        {
+            seDaggreBow = false;
+        }
+
+        if ((mainWeapon == Weapon.Bow && subWeapon == Weapon.Sword)
+            || (subWeapon == Weapon.Bow && mainWeapon == Weapon.Sword))
+        {
+
+        }
     }
 
     void GetWeapon(Weapon getweapon)
     {
-        
         if (delta >= changeSpan && GameDirector.weaponPoint > 0)
         {
             GameDirector.weaponPoint -= 1;
@@ -173,7 +177,7 @@ public class WeaponControl : MonoBehaviour
             gameDirector.GetWeapon((int)subWeapon, (int)mainWeapon);
             mainWeaponTimes = 2;
             stoneTouch = false;
-        }      
+        }
     }
 
     void TimeReset()
@@ -185,10 +189,53 @@ public class WeaponControl : MonoBehaviour
     {
         dame.SetActive(false);
         weapon.SetActive(true);
+        mainWeaponTimes--;
+        if (mainWeaponTimes == 0)
+        {
+            mainWeapon = Weapon.Nome;
+            mainWeaponTimes = -1;
+            gameDirector.GetWeapon((int)subWeapon, (int)mainWeapon);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Red")
+        {
+            TimeReset();
+            getWeapon = Weapon.Sword;
+            stoneTouch = true;
+        }
+        if (collision.gameObject.tag == "Yellow")
+        {
+            TimeReset();
+            getWeapon = Weapon.Dagger;
+            stoneTouch = true;
+        }
+        if (collision.gameObject.tag == "Blue")
+        {
+            TimeReset();
+            getWeapon = Weapon.Bow;
+            stoneTouch = true;
+        }
+        if(collision.gameObject.tag == "wall")
+        {
+            wall = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        stoneTouch = false;
     }
 
     Weapon MainWeapon()
     {
         return mainWeapon;
+    }
+
+    public bool SeDaggreBow()
+    {
+        return seDaggreBow;
     }
 }

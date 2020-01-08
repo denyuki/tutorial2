@@ -15,6 +15,9 @@ public class DaggerMove : MonoBehaviour
     [SerializeField]
     InputControl inputControl;
 
+    [SerializeField]
+    GameObject dame;
+
     bool skill;
     bool jump;
 
@@ -22,6 +25,8 @@ public class DaggerMove : MonoBehaviour
     {
         skill = false;
         jump = false;
+        PlayerMove.a = true;
+        this.pos = playe.transform.position;
     }
 
     private void Start()
@@ -32,13 +37,14 @@ public class DaggerMove : MonoBehaviour
     void Update()
     {
         jump = inputControl.Jump();
-        if (skill == true)
+        
         {
             rigidbody2D.velocity = Vector3.zero;
             playe.transform.position = this.pos;
             if (jump == true)
             {
                 gameObject.SetActive(false);
+                dame.SetActive(true);
             }
         }
     }

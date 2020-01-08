@@ -76,7 +76,5 @@ public class Dagger : MonoBehaviour
     {
         dame.SetActive(true);
         gameObject.SetActive(false);
-
-
     }
 }
