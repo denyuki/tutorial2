@@ -5,32 +5,57 @@ using UnityEngine;
 public class SwordEnemyAttack : MonoBehaviour
 {
     EnemyMove enemyMove;
+
+    [SerializeField]
     Animator animator;
+
     [SerializeField]
     GameDirector gameDirector;
 
-    bool attack = false;
+    bool at = false;
     bool hit = false;
-    float damage = 100;
+    bool attackStop = false;
+    [SerializeField]
+    int damage = 10;
+    Vector3 pos;
 
     // Start is called before the first frame update
     void Start()
     {
         enemyMove = GetComponent<EnemyMove>();
-        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
+
+        if (at)
+        {           
+            animator.SetBool("Attack", true);
+            if (hit)
+            {
+                gameDirector.Damage(damage);
+                hit = false;
+            }
+        }
+        else
+        {
+            animator.SetBool("Attack", false);
+            
+        }
+
+        if (attackStop)
+        {
+            transform.position = pos;
+        }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
-        if(collision.gameObject.tag == ("Player"))
+        if (collision.gameObject.tag == ("Player"))
         {
-            Attack();
+            at = true;
         }
     }
 
@@ -38,27 +63,30 @@ public class SwordEnemyAttack : MonoBehaviour
     {
         if (collision.gameObject.tag == ("Player"))
         {
-            attack = false;
+            at = false;
+            hit = false;
         }
     }
 
-    private void Attack()
+    public void Attack()
     {
-        animator.SetBool("Attack", true);
-        if (hit == true)
-        {
-            gameDirector.Damage(damage);
-        }
+        attackStop = true;
+        pos = transform.position;
     }
 
     public void OnHit()
     {
         hit = true;
+        Debug.Log("a");
+
     }
 
-    public void OffHit()
+    public void NoHit()
     {
+        attackStop = false;
+        at = false;
         hit = false;
+       
     }
 
 }

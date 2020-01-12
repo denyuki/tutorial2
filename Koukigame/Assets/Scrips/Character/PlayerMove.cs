@@ -13,6 +13,7 @@ public class PlayerMove : MonoBehaviour
     float startTime;
     float time = 0.2f;
     bool knockBack;
+    bool wall = false;
 
     [SerializeField]
     Animator animator;
@@ -26,6 +27,7 @@ public class PlayerMove : MonoBehaviour
     Vector3 move;
     Vector3 startPosition;
     Vector3 endposition;
+    Vector3 pos;
 
     private void Start()
     {
@@ -37,16 +39,8 @@ public class PlayerMove : MonoBehaviour
 
     private void Update()
     {
-        if (this.speed > 0)
-        {
-            this.speed -=  this.accel * 0.5f * Time.deltaTime;
-        }
-        else if (this.speed < 0)
-        {
-            this.speed +=  this.accel * 0.5f * Time.deltaTime;
-        }
 
-        if (knockBack)
+        if (knockBack && !wall)
         {
             speed = 0;
             var diff = Time.timeSinceLevelLoad - startTime;
@@ -60,6 +54,7 @@ public class PlayerMove : MonoBehaviour
 
             transform.position = Vector3.Lerp(startPosition, endposition, rate);
         }
+
     }
 
 
@@ -70,6 +65,18 @@ public class PlayerMove : MonoBehaviour
         this.speed = Mathf.Clamp(this.speed, -5, 5);
         transform.Translate(this.speed * Time.deltaTime, 0, 0);
         animator.SetFloat("speed", Mathf.Abs(speed));
+
+        if (wmove == 0)
+        {
+            if (this.speed > 0)
+            {
+                this.speed -= this.accel * 0.5f * Time.deltaTime;
+            }
+            else if (this.speed < 0)
+            {
+                this.speed += this.accel * 0.5f * Time.deltaTime;
+            }
+        }
     }
 
     public void JumpMove(bool jmove)
@@ -99,8 +106,20 @@ public class PlayerMove : MonoBehaviour
         {
             animator.SetBool("jump", false);
             a = true;
-        }       
+        } 
+        if(other.gameObject.tag == "wall")
+        {
+            
+            wall = true;
+        }
     }
 
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if(collision.gameObject.tag == "wall")
+        {
+            wall = false;
+        }
+    }
 
 }

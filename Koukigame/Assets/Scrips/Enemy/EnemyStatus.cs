@@ -14,7 +14,9 @@ public class EnemyStatus : MonoBehaviour
     bool a = false;
     bool seDaggreBow = false;
     int damage = 1;
-    
+    float delta = 0f;
+    float span = 0.2f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,10 +27,12 @@ public class EnemyStatus : MonoBehaviour
     void Update()
     {
         seDaggreBow = weaponControl.SeDaggreBow();
-
-        if (a)
+        delta += Time.deltaTime;
+        if (a && delta < span)
         {
+            delta = 0;
             Damage();
+            Debug.Log("a");
             
         }
     }
@@ -38,7 +42,6 @@ public class EnemyStatus : MonoBehaviour
         if (collision.gameObject.tag == "PlayerAttack")
         {
             a = true;
-            Debug.Log("a");
         }
     }
 
@@ -63,6 +66,7 @@ public class EnemyStatus : MonoBehaviour
             
         }
         hp -= damage;
+        Debug.Log(hp);
         if (hp <= 0)
         {
             Destroy(gameObject);

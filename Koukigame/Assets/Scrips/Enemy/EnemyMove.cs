@@ -14,6 +14,9 @@ public class EnemyMove : MonoBehaviour
     [SerializeField]
     GameObject player;
 
+    [SerializeField]
+    Animator animator;
+
     Vector3 pos;
 
     float speed = 0.05f;
@@ -21,10 +24,13 @@ public class EnemyMove : MonoBehaviour
     float distance;
     bool attack = false;
 
+    [SerializeField]
+    float attackDistance = 0;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        pos = transform.position;
     }
 
     // Update is called once per frame
@@ -32,32 +38,40 @@ public class EnemyMove : MonoBehaviour
     {
         
         distance = Vector3.Distance(transform.position, player.transform.position);
- 
+
+        if (Mathf.Abs(player.transform.position.x - transform.position.x) < attackDistance)
+        {
+            a = 0;
+        }
+        else if (player.transform.position.x < transform.position.x)
+        {
+            a = -1;
+            transform.localScale = new Vector3(0.2f * a, 0.2f, 1);
+        }
+        else
+        {
+            a = 1;
+            transform.localScale = new Vector3(0.2f * a, 0.2f, 1);
+        }
+        transform.Translate(speed * a, 0, 0);
+
+
+
         switch (this.enemystate)
-        {          
+        {   
+            
             case Enemystate.Follow:
                 {
-                    if (distance > 7f || distance < 2f)
+                    if (distance > 10f || distance < attackDistance)
                     {
                         this.enemystate = Enemystate.wait;
-                    }
-
-                    if(Mathf.Abs(player.transform.position.x - transform.position.x) < 2)
-                    {
-                        a = 0;
-                        attack = true;
-
-                    }else if(player.transform.position.x < transform.position.x)
-                    {
-                        a = -1;
-                        transform.localScale = new Vector3(0.3f * a, 0.3f, 1);
+                        pos = transform.position;
+                       
                     }
                     else
                     {
-                        a = 1;
-                        transform.localScale = new Vector3(0.3f * a, 0.3f, 1);
+                        animator.SetBool("Move", true);
                     }
-                    transform.Translate(speed * a, 0, 0);
                     
 
                 }
@@ -66,29 +80,20 @@ public class EnemyMove : MonoBehaviour
             case Enemystate.wait:
                 {
                     
-                    if(distance < 6f && distance > 2.5f)
+                    if(distance < 9.8f && distance > attackDistance + 0.2f)
                     {
                         this.enemystate = Enemystate.Follow;
                     }
-                    pos = transform.position;
-
-                    transform.position = pos;
+                    else
+                    {
+                        animator.SetBool("Move", false);
+                        transform.position = pos;
+                    }
+                                       
                 }
                 break;
         }
     }
 
-    public bool Attack()
-    {
-        return attack;
-    }
-
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if(collision.gameObject.tag == "Player")
-        {
-
-        }       
-    }
 
 }

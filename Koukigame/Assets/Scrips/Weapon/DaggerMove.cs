@@ -5,6 +5,7 @@ using UnityEngine;
 public class DaggerMove : MonoBehaviour
 {
     Vector3 pos;
+    Vector3 scale;
 
     [SerializeField]
     GameObject playe;
@@ -20,6 +21,7 @@ public class DaggerMove : MonoBehaviour
 
     bool skill;
     bool jump;
+    float delta = 0;
 
     private void OnEnable()
     {
@@ -27,6 +29,7 @@ public class DaggerMove : MonoBehaviour
         jump = false;
         PlayerMove.a = true;
         this.pos = playe.transform.position;
+        scale = playe.transform.localScale;
     }
 
     private void Start()
@@ -36,8 +39,11 @@ public class DaggerMove : MonoBehaviour
 
     void Update()
     {
+        delta = Time.deltaTime;
         jump = inputControl.Jump();
-        
+        playe.transform.localScale = new Vector3(scale.x * -1, scale.y, scale.z);
+
+        if (delta < 3)
         {
             rigidbody2D.velocity = Vector3.zero;
             playe.transform.position = this.pos;
@@ -45,7 +51,12 @@ public class DaggerMove : MonoBehaviour
             {
                 gameObject.SetActive(false);
                 dame.SetActive(true);
-            }
+            }    
+        }
+        else
+        {
+            gameObject.SetActive(false);
+            dame.SetActive(true);
         }
     }
 

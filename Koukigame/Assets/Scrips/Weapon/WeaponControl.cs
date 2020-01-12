@@ -47,6 +47,7 @@ public class WeaponControl : MonoBehaviour
     bool stoneTouch;
     bool wall = false;
     bool seDaggreBow = false;
+    bool noDamage = false;
     float delta = 0f;
     float span = 0.5f;
     float changeSpan = 1f;
@@ -116,7 +117,11 @@ public class WeaponControl : MonoBehaviour
                             WeaponSkillTrigger(daggerMove);
                             TimeReset();
                         }
-                        wall = false;
+                        else
+                        {
+                            wall = false;
+                        }
+                       
                     }
                     if (atSkills == true)
                     {
@@ -163,7 +168,11 @@ public class WeaponControl : MonoBehaviour
         if ((mainWeapon == Weapon.Bow && subWeapon == Weapon.Sword)
             || (subWeapon == Weapon.Bow && mainWeapon == Weapon.Sword))
         {
-
+            noDamage = true;
+        }
+        else
+        {
+            noDamage = false;
         }
     }
 
@@ -227,6 +236,7 @@ public class WeaponControl : MonoBehaviour
     private void OnTriggerExit2D(Collider2D collision)
     {
         stoneTouch = false;
+        wall = false;
     }
 
     Weapon MainWeapon()
@@ -237,5 +247,10 @@ public class WeaponControl : MonoBehaviour
     public bool SeDaggreBow()
     {
         return seDaggreBow;
+    }
+
+    public bool NoDamage()
+    {
+        return noDamage;
     }
 }

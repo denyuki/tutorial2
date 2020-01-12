@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class GameDirector : MonoBehaviour
 {
-    float hp = 100;
+    int hp = 100;
     public static int weaponPoint = 5;
 
     [SerializeField]
@@ -33,12 +33,14 @@ public class GameDirector : MonoBehaviour
     GameObject gameOverImage;
 
     PlayerMove playerMove;
+    WeaponControl weaponControl;
 
 
     // Start is called before the first frame update
     void Start()
     {
         playerMove = GetComponent<PlayerMove>();
+        weaponControl = GetComponent<WeaponControl>();
 
     }
 
@@ -48,9 +50,12 @@ public class GameDirector : MonoBehaviour
         
     }
 
-    public void Damage(float damage)
+    public void Damage(int damage)
     {
-        hp -= damage;
+        if (!weaponControl.NoDamage())
+        {
+            hp -= damage;
+        }
         Debug.Log(hp);
 
         if (hp <= 25)

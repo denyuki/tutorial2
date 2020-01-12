@@ -15,16 +15,19 @@ public class BowAttack : MonoBehaviour
     [SerializeField, Range(0F, 90F), Tooltip("射出する角度")]
     private float ThrowingAngle;
 
+    Animator animator;
 
     EnemyMove enemyMove;
 
-    float delta = 0f;
+    bool attack = false;
+    float delta = 0;
     float span = 3f;
 
 
     private void Start()
     {
         enemyMove = GetComponent<EnemyMove>();
+        animator = GetComponent<Animator>();
 
         Collider collider = GetComponent<Collider>();
         if (collider != null)
@@ -37,13 +40,23 @@ public class BowAttack : MonoBehaviour
     private void Update()
     {
         delta += Time.deltaTime;
-        if (delta > span)
+        if (attack && delta > span)
         {
             delta = 0;
-            if (enemyMove.Attack())
-            {
-                ThrowingBall();
-            }
+            animator.SetBool("Attack", true);
+            attack = false;
+        }
+        else
+        {
+            animator.SetBool("Attack", false);
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            attack = true;
         }
     }
 
@@ -97,5 +110,10 @@ public class BowAttack : MonoBehaviour
         {
             return (new Vector3(pointB.x - pointA.x, x * Mathf.Tan(rad), pointB.z - pointA.z).normalized * speed);
         }
+    }
+
+    public void Firing()
+    {
+        ThrowingBall();
     }
 }

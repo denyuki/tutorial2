@@ -12,6 +12,11 @@ public class Bow : MonoBehaviour
     [SerializeField]
     GameObject dame;
 
+    [SerializeField]
+    GameObject player;
+
+    GameObject ball;
+
     bool attack;
 
     Vector3 pos;
@@ -21,9 +26,19 @@ public class Bow : MonoBehaviour
         pos = dame.transform.position;
     }
 
+    private void Update()
+    {
+ 
+    }
+
     void Attack()
     {
-        Instantiate(arrowPrefab);     
+        ball  = Instantiate(arrowPrefab, transform.position, Quaternion.identity);
+
+
+           ball.transform.localScale = new Vector3(0.5f * player.transform.localScale.x, 1f, 1);
+
+       
     }
 
     void End()

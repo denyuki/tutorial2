@@ -17,6 +17,9 @@ public class BowMove : MonoBehaviour
     [SerializeField]
     InputControl inputControl;
 
+    [SerializeField]
+    GameObject dame;
+
     float smol = 7;
     float distance = -1;
 
@@ -58,6 +61,11 @@ public class BowMove : MonoBehaviour
             hingeJoint.enabled = false;
             hingeJoint.connectedBody = null;
             gameObject.SetActive(false);
+            dame.SetActive(true);
+        }else
+        {
+            gameObject.SetActive(false);
+            dame.SetActive(true);
         }
 
     }
