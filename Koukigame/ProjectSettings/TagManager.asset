@@ -14,6 +14,8 @@ TagManager:
   - Blue
   - PlayerAttack
   - GameOver
+  - EnemyArrow
+  - Goal
   layers:
   - Default
   - TransparentFX
@@ -26,7 +28,7 @@ TagManager:
   - Arrow
   - Player
   - Hook
-  - 
+  - Enemy
   - 
   - 
   - 

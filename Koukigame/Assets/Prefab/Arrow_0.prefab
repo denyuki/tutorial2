@@ -10,12 +10,12 @@ GameObject:
   m_Component:
   - component: {fileID: 8019103144368825169}
   - component: {fileID: 415907918827287242}
+  - component: {fileID: 7507609459896673919}
   - component: {fileID: 6020230803323523535}
-  - component: {fileID: 5245112500362655606}
   - component: {fileID: 5579252508213179411}
   m_Layer: 0
   m_Name: Arrow_0
-  m_TagString: Untagged
+  m_TagString: EnemyArrow
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -82,6 +82,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7507609459896673919
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1190804804680208478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a20f45dca42f06f429a2ff085b9b79fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameDirector: {fileID: 0}
 --- !u!50 &6020230803323523535
 Rigidbody2D:
   serializedVersion: 4
@@ -103,19 +116,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &5245112500362655606
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1190804804680208478}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a20f45dca42f06f429a2ff085b9b79fe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameDirector: {fileID: 0}
 --- !u!61 &5579252508213179411
 BoxCollider2D:
   m_ObjectHideFlags: 0
